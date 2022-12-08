@@ -1,0 +1,30 @@
+nacos:
+  namespace: b3d9a502-0d78-4c17-b07b-041162662196 # nacos配置文件的命名空间，默认为 public,如需改动，则在启动参数上加 --nacos.namespace=
+  server-addr-local: localhost:8848 # 本次环境
+spring:
+  # 应用名称
+  application:
+    name: nacos-demo
+  # nacos配置
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        # 服务注册地址 (nacos服务接口,不能加http前缀，直接访问localhost:8848/nacos可以进入管理页面) 可以配置多个，逗号分隔
+        server-addr: ${nacos.server-addr-local}
+        # nacos配置文件的命名空间(命名空间ID，Nacos通过不同的命名空间来区分不同的环境，进行数据隔离,服务消费时只能消费到对应命名空间下的服务)
+        namespace: ${nacos.namespace}
+        # 是否开启Nacos Watch，默认true(类似长连接监听服务端信息变化的功能)
+        watch:
+          enabled: false
+      # 配置中心
+      config:
+        server-addr: ${nacos.server-addr-local}
+        namespace: ${nacos.namespace}
+        prefix: ${spring.application.name}
+        group: DEFAULT_GROUP
+        # 配置文件的格式，默认为properties
+        file-extension: yml
+#        extension-configs:
+
+
